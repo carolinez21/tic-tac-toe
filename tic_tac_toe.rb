@@ -83,8 +83,16 @@ print_board(positions)
 current_player = PlayerO
 other_player = PlayerX
 
+# check if game is over
+#if (positions.any? { |p| (1..9).include?(p) }).empty?
+ # puts 'Gosh darn, nobody won. How lame.'
+#end
+def game_over?(positions)
+  positions.none? { |p| (1..9).include?(p) }
+end
+
 # loop
-until current_player.wins?
+until current_player.wins? || game_over?(positions)
   temp = current_player
   current_player = other_player
   other_player = temp
@@ -102,5 +110,8 @@ until current_player.wins?
   positions[position - 1] = current_player.letter
   print_board(positions)
 end
-# if no spots left to go
-puts "Yay!! #{current_player} wins. Sucks to be you #{other_player}."
+if game_over?(positions)
+  puts 'Gosh darn, nobody won. How lame.'
+else
+  puts "Yay!! #{current_player} wins. Sucks to be you #{other_player}."
+end
